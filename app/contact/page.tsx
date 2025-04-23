@@ -1,14 +1,14 @@
-// 'use client'
+'use client'
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { createContact } from "../action/contact/createContact";
-// import { useActionState } from "react";
+import { useActionState } from "react";
 
 const ContactPage = () => {
 
-  // const [state] = useActionState(createContact);
+  const [state, action, isPending] = useActionState(createContact, null);
   // console.log(state?.errors)
   return (
     <section className="py-32">
@@ -43,7 +43,7 @@ const ContactPage = () => {
             </div>
           </div>
           <form
-            action={createContact}
+            action={action}
             className="mx-auto flex max-w-screen-md flex-col gap-6 rounded-lg border p-10"
           >
             <div className="flex gap-4">
@@ -55,6 +55,7 @@ const ContactPage = () => {
                   name="firstname"
                   placeholder="First Name"
                 />
+                {state?.errors && ( <p className="text-red-500 font-semibold text-[12px] py-2 ">{state.errors.firstname}</p>)}
               
               </div>
               <div className="grid w-full items-center gap-1.5">
@@ -65,11 +66,13 @@ const ContactPage = () => {
                   name="lastname"
                   placeholder="Last Name"
                 />
+                {state?.errors && ( <p className="text-red-500 font-semibold text-[12px] py-2 ">{state.errors.lastname}</p>)}
               </div>
             </div>
             <div className="grid w-full items-center gap-1.5">
               <Label htmlFor="email">Email</Label>
               <Input type="email" id="email" name="email" placeholder="Email" />
+              {state?.errors && ( <p className="text-red-500 font-semibold text-[12px] py-2 ">{state.errors.email}</p>)}
             </div>
             <div className="grid w-full items-center gap-1.5">
               <Label htmlFor="subject">Subject</Label>
@@ -79,6 +82,7 @@ const ContactPage = () => {
                 name="subject"
                 placeholder="Subject"
               />
+              {state?.errors && ( <p className="text-red-500 font-semibold text-[12px] py-2 ">{state.errors.subject}</p>)}
             </div>
             <div className="grid w-full gap-1.5">
               <Label htmlFor="message">Message</Label>
@@ -87,8 +91,9 @@ const ContactPage = () => {
                 id="message"
                 name="message"
               />
+              {state?.errors && ( <p className="text-red-500 font-semibold text-[12px] py-2 ">{state.errors.message}</p>)}
             </div>
-            <Button type="submit" className="w-full cursor-pointer">
+            <Button type="submit" disabled={isPending} className="w-full cursor-pointer">
               Submit
             </Button>
           </form>

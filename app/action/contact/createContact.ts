@@ -1,4 +1,4 @@
-// 'use server';
+'use server';
 import {z} from 'zod';
 
 const formSchema = z.object({
@@ -10,8 +10,8 @@ const formSchema = z.object({
 })
 
 
-export const createContact = async (formData: FormData) => {
-    'use server';
+export const createContact = async (prevState: any,formData: FormData) => {
+    // 'use server';
     // console.log(formData)
 
     const validatedFields = formSchema.safeParse({
